@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
@@ -45,11 +46,17 @@ class App extends Component {
    
   });
     
-    return (  <Card >
+    return ( 
+      <Grid container spacing={24}justify={"center"}>
+        <Grid item xs={6}>
+      <Card >
       <CardContent>
         {form}
       </CardContent>
-        </Card>)
+        </Card>
+        </Grid>
+        </Grid>
+        )
     
     } 
     
