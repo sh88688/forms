@@ -7,13 +7,15 @@ import CardContent from '@material-ui/core/CardContent';
 
 import InputBuilder from './Input';
 const data = [{
-  "type": "time",
+  "elementType":"textfield",
+  "type": "text",
   "name": "FirstName",                    
   "classname": "text",
   "placeholder": "Enter first name",
   "inputProps":{defaultValue:"12:00"}
 },
 {
+  "elementType":"textfield",
   "type": "password",
   "name": "paascode",                  
   "classname": "text",
@@ -21,6 +23,7 @@ const data = [{
   
 },
 {
+  "elementType":"textfield",
   "type": "email",
   "name": "select color",                  
   "classname": "text",
@@ -28,8 +31,21 @@ const data = [{
   "inputProps":{defaultValue:"2018/12/16"}
 },
 {
+  "elementType":"textfield",
   "type": "date",
   "name": "select date",                  
+  "classname": "text"
+}
+,
+{
+  "elementType":"radio",
+  "name": "male",                  
+  "classname": "text"
+}
+,
+{
+  "elementType":"radio",
+  "name": "female",                  
   "classname": "text"
 }
 ]
@@ -47,6 +63,7 @@ class App extends Component {
   });
     
     return ( 
+      <div style={{ padding: 20 }}>
       <Grid container spacing={24}justify={"center"}>
         <Grid item xs={6}>
       <Card >
@@ -56,6 +73,7 @@ class App extends Component {
         </Card>
         </Grid>
         </Grid>
+        </div>
         )
     
     } 
