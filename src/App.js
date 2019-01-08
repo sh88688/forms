@@ -19,10 +19,10 @@ const data = [
   {
     elementType: "textfield-select",
     type: "text",
-    name: "First Name",
+    name: "Currency",
     classname: "text",
-    placeholder: "Enter first name",
-    inputProps: { defaultValue: "Shivam" },
+    placeholder: "Select Currency",
+    inputProps: { defaultValue: "Shivam",shrink:true },
     variant: "outlined"
   },
   {
@@ -43,12 +43,12 @@ const data = [
     variant: "outlined"
   },
   {
-    elementType: "textfield",
-    type: "email",
-    name: "select color",
+    elementType: "textfield-date",
+    type: "date",
+    name: "Birthday",
     classname: "text",
-    placeholder: "Enter surname",
-    inputProps: { defaultValue: "2018/12/16" },
+    placeholder: "Your Birthday",
+    inputProps: { defaultValue: "2018/12/16",shrink:true },
     variant: "outlined"
   },
   {
@@ -71,11 +71,33 @@ const data = [
 ];
 
 class App extends Component {
+
+  
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedOrderForm = {
+        ...this.state.orderForm
+    };
+    const updatedFormElement = { 
+        ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    
+    let formIsValid = true;
+    for (let inputIdentifier in updatedOrderForm) {
+        formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
+    this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
+}
+
+
   render() {
     const form = data.map((input, i) => {
       return (
         <div>
-          <InputBuilder id={input.name} params={input} />
+          <InputBuilder id={input.name} params={input} changeValue={(event) => this.inputChangedHandler(event, formElement.id)} />
         </div>
       );
     });

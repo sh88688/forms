@@ -21,35 +21,26 @@ const currencies = [
   }
 ];
 
-class InputBuilder extends Component {
-  constructor(props) {
-    super(props);
-    this.changeValue = this.changeValue.bind(this);
-  }
+const Input = (props) => {
 
-  changeValue(event) {
-    console.log(event.target.value);
-  }
+  const {
+    type,
+    name,
+    classname,
+    placeholder,
+    inputProps,
+    elementType,
+    variant
+  } = props.params;
 
-  render() {
-    const {
-      type,
-      name,
-      classname,
-      placeholder,
-      inputProps,
-      elementType,
-      variant
-    } = this.props.params;
-    console.log("key", this.props.id);
-    let Element = "";
+  let Element = "";
     switch (elementType) {
       case "radio":
         Element = (
           <Radio
             value="b"
-            key={this.props.id}
-            onChange={this.changeValue}
+            key={props.id}
+            onChange={props.changeValue}
             id={name}
             name={name}
           />
@@ -58,8 +49,8 @@ class InputBuilder extends Component {
       case "textfield":
         Element = (
           <TextField
-            key={this.props.id}
-            onChange={this.changeValue}
+            key={props.id}
+            onChange={props.changeValue}
             id={name}
             label={name}
             name={name}
@@ -74,13 +65,16 @@ class InputBuilder extends Component {
       case "textfield-select":
         Element = (
           <TextField
-            id="outlined-select-currency"
+            key={props.id}
+            id={name}
             select
-            label="Select"
-            onChange={this.changeValue}
-            helperText="Please select your currency"
+            label={name}
+            helperText={placeholder}
             margin="normal"
             variant="outlined"
+            InputLabelProps={{
+            shrink: inputProps.shrink,
+            }}
           >
             {currencies.map(option => (
               <MenuItem key={option.value} value={option.value}>
@@ -90,9 +84,42 @@ class InputBuilder extends Component {
           </TextField>
         );
         break;
+
+      case "textfield-date":
+        Element = (<TextField
+          key={props.id}
+          id={name}
+          label={name}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          inputProps={inputProps}
+          InputLabelProps={{
+            shrink: inputProps.shrink,
+          }}
+      />);
+      break;
+    default:
+    Element = (
+      <TextField
+        key={props.id}
+        onChange={props.changeValue}
+        id={name}
+        label={name}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        inputProps={inputProps}
+        variant={variant}
+        margin="normal"
+      />
+    );
+      break;
     }
-    return <div className={classname}>{Element}</div>;
-  }
+    
+    return (
+   <div className={classname}>{Element}</div>
+    );
 }
 
-export default InputBuilder;
+export default Input;
