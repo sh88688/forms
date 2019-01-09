@@ -1,28 +1,22 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import classes from './Input.css';
 import MenuItem from "@material-ui/core/MenuItem";
 
 const InputBuilder = ( props ) => {
     let inputElement = null;
     
-    const inputClasses = [classes.InputElement];
-
-    if (props.invalid && props.shouldValidate && props.touched) {
-        inputClasses.push(classes.Invalid);
-    }
    
     switch ( props.elementType ) {
         case ( 'input' ):
             inputElement =<TextField
-            className={inputClasses.join(' ')}
+            error={props.errorValue === false && props.touched !== false}
             onChange={props.changed}
             {...props.elementConfig}
           /> 
             break;
         case ( 'textarea' ):
             inputElement = <textarea
-                className={inputClasses.join(' ')}
+               
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed} />;
@@ -43,7 +37,7 @@ const InputBuilder = ( props ) => {
             break;
         default:
             inputElement = <input
-                
+                error={props.errorValue === false && props.touched !== false}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed} />;
