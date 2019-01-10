@@ -7,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import checkValidity from "./Validator";
 
 class FormRender extends Component {
   state = {
@@ -16,15 +17,38 @@ class FormRender extends Component {
         elementConfig: {
           type: "password",
           label: "Emp Id",
-          defaultValue: "KamaL",
+          placeholder: "Your Emp ID",
+          defaultValue: "",
           helperText: "",
           variant: "outlined",
           margin: "normal"
         },
         value: "",
         validation: {
-          required: true
+          required: true,
+          minLength: 5
         },
+        valid: false,
+        touched: false
+      },
+      gender: {
+        elementType: "radio",
+        elementConfig: {
+          configs: {
+            name: "gender",
+            label: "Your Gender",
+            defaultValue: "male",
+            color: "secondary",
+            margin: "normal"
+          },
+          options: [
+            { value: "male", label: "Male", labelPlacement: "start" },
+            { value: "female", label: "Female", labelPlacement: "start" },
+            { value: "other", label: "Other", labelPlacement: "start" }
+          ]
+        },
+        value: "female",
+        validation: {},
         valid: false,
         touched: false
       },
@@ -73,7 +97,8 @@ class FormRender extends Component {
         },
         value: "",
         validation: {
-          required: true
+          required: true,
+          minLength: 5
         },
         valid: false,
         touched: false
@@ -126,7 +151,7 @@ class FormRender extends Component {
             helperText: "Select Your Delivery Method"
           }
         },
-        value: "",
+        value: "fastest",
         validation: {},
         valid: true
       }
@@ -144,56 +169,49 @@ class FormRender extends Component {
         formElementIdentifier
       ].value;
     }
-    // const order = {
-    //   ingredients: this.props.ingredients,
-    //   price: this.props.price,
-    //   orderData: formData
-    // };
-    
+    const order = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+      orderData: formData
+    };
+    console.log(order);
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    return isValid;
-  }
-
   inputChangedHandler = (event, inputIdentifier) => {
+    //make a copy of orderForm State
     const updatedOrderForm = {
       ...this.state.orderForm
     };
+    // make a copy of Changed Element
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier]
     };
+    //update changed value
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
+    //check validity
+    let getValidity = checkValidity(
       updatedFormElement.value,
       updatedFormElement.validation
     );
+
+    updatedFormElement.valid = getValidity.isValid;
+    updatedFormElement.elementConfig.helperText = getValidity.errorText;
+    //updated element's touched property
     updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
-    console.log(updatedFormElement);
+
+    //Checking The whole form Validity
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm) {
       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
     }
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+    //console.log(this.state.orderForm[inputIdentifier]);
   };
 
   render() {
     const formElementsArray = [];
+
     for (let key in this.state.orderForm) {
       formElementsArray.push({
         id: key,
@@ -230,6 +248,8 @@ class FormRender extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
+        <br />
+        {JSON.stringify(this.state.formIsValid)}
         <br />
         <Grid container spacing={24} justify={"center"}>
           <Grid item xs={6}>
