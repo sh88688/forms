@@ -9,6 +9,9 @@
   "author": "shivam sharma",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "body-parser": "1.18.3",
+    "mongoose": "5.4.5",
+    "morgan": "1.9.1"
   }
 }

@@ -32,15 +32,26 @@ class FormRender extends Component {
   }
 
   submitHandler = event => {
+    event.preventDefault();
     this.setState({ loading: true });
-    const formData = {};
+    let formData = {};
     for (let formElementIdentifier in this.state.iForm) {
       formData[formElementIdentifier] = this.state.iForm[
         formElementIdentifier
       ].value;
     }
-
     console.log(formData);
+    
+        fetch('http://localhost:3001/putData',{
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+    .then(data => data.json())
+    .then(res => console.log(res));
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
