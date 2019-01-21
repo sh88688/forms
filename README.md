@@ -19,7 +19,12 @@ Install node and npm is automatically install prerequisites throuh package.json
 
 ### Setup
 
-Clone this repository into your local machine
+Clone this repository into your local machine by runing
+
+```
+git clone https://github.com/sh88688/forms.git
+
+```
 
 Then
 
