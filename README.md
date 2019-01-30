@@ -4,7 +4,7 @@ expressJS
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -51,6 +51,50 @@ cd backend
 npm install
 ```
 
+## For running the project
+
+We have to run Concurrently both frontend and backend.
+
+#### Backend 
+
+In the new terminal type below commands
+ 
+```
+cd backend 
+
+npm start
+``` 
+##### Output
+
+```
+> form-backend@1.0.0 start /home/shivam/Desktop/forms/backend
+> node server.js
+
+Example app listening on port 3001!
+connected to the database
+
+```
+
+
+#### Frontend 
+
+In the new terminal type below commands
+ 
+```
+cd frontend 
+
+npm start
+``` 
+##### Output
+
+```
+You can now view forms in the browser.
+
+  Local:            http://localhost:3000/
+  On Your Network:  http://172.20.10.6:3000/
+```
+
+
 End with an example of sample JSON data which is available in backend/JsonData/formJson.json
 
 ### JSON Format
@@ -87,4 +131,6 @@ sample Json Format of form rendering
               },
 }
 ```
+
+
 
